@@ -1,10 +1,27 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { useInternetIdentity } from '../hooks/useInternetIdentity';
+import React, { useState } from 'react';
+import WalletConnectProvider from '@walletconnect/web3-provider';
 import { Shield, Users, MapPin, Bell } from 'lucide-react';
 
 export default function LoginScreen() {
-  const { login, isLoggingIn } = useInternetIdentity();
+  const [account, setAccount] = useState<string | null>(null);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+
+  const connectWallet = async () => {
+    setIsLoggingIn(true);
+    const provider = new WalletConnectProvider({
+      rpc: {
+        1: 'https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID',
+      },
+      qrcode: true,
+    });
+
+    await provider.enable();
+    const accounts = await provider.request({ method: 'eth_accounts' });
+    setAccount(accounts[0]);
+    setIsLoggingIn(false);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted">
@@ -84,14 +101,20 @@ export default function LoginScreen() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <Button
-                onClick={login}
-                disabled={isLoggingIn}
-                size="lg"
-                className="w-full bg-gradient-to-r from-destructive to-chart-1 hover:opacity-90"
-              >
-                {isLoggingIn ? 'Connecting...' : 'Sign In with Internet Identity'}
-              </Button>
+              {account ? (
+                <div className="text-center">
+                  <p className="text-lg">Connected as: {account}</p>
+                </div>
+              ) : (
+                <Button
+                  onClick={connectWallet}
+                  disabled={isLoggingIn}
+                  size="lg"
+                  className="w-full bg-gradient-to-r from-destructive to-chart-1 hover:opacity-90"
+                >
+                  {isLoggingIn ? 'Connecting...' : 'Sign In with Internet Identity'}
+                </Button>
+              )}
               <p className="text-xs text-center text-muted-foreground">
                 Secure, decentralized authentication powered by the Internet Computer
               </p>

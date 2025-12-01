@@ -79,4 +79,10 @@ module {
   public func isAdmin(state : AccessControlState, caller : Principal) : Bool {
     getUserRole(state, caller) == #admin;
   };
+
+  public func verifyWalletSignature(message: Text, signature: Text, address: Text): Bool {
+    // Placeholder for wallet signature verification logic
+    // Use a library or external service to verify the signature
+    return true; // Replace with actual verification logic
+  }
 };
