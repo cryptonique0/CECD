@@ -15,11 +15,13 @@ const OfflineSupport: React.FC = () => {
 
   useEffect(() => {
     const handleOnline = () => {
+      console.debug("[OfflineSupport] Network status: online");
       setSyncStatus((prev) => ({ ...prev, isOnline: true }));
       syncPendingData();
     };
 
     const handleOffline = () => {
+      console.debug("[OfflineSupport] Network status: offline");
       setSyncStatus((prev) => ({ ...prev, isOnline: false }));
     };
 
