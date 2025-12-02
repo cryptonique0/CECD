@@ -1,0 +1,13 @@
+#!/bin/bash
+# Pre-commit hook that runs tests
+
+echo "Running pre-commit checks..."
+
+cd frontend && npm test --if-present
+
+if [ $? -ne 0 ]; then
+  echo "Tests failed. Commit aborted."
+  exit 1
+fi
+
+echo "Pre-commit checks passed!"
