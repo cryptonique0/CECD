@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { formatCurrency } from "../lib/format";
 import { useWallet } from "../contexts/WalletContext";
 
 interface Proposal {
@@ -126,7 +127,7 @@ const MultiSigWallet: React.FC = () => {
       <div className="p-4 bg-gradient-to-r from-blue-500 to-blue-600 rounded-lg text-white">
         <p className="text-sm opacity-90">Total Fund Balance</p>
         <p className="text-3xl font-bold mt-1">5,000 CELO</p>
-        <p className="text-xs opacity-75 mt-2">≈ $5,000 USD</p>
+        <p className="text-xs opacity-75 mt-2">≈ {formatCurrency(5000, 'USD')}</p>
       </div>
 
       {/* Create Proposal Form */}
@@ -210,6 +211,7 @@ const MultiSigWallet: React.FC = () => {
               <div>
                 <span className="text-gray-600">Amount:</span>
                 <span className="ml-2 font-semibold">{proposal.amount} CELO</span>
+                <div className="text-xs text-gray-500">≈ {formatCurrency(Number(proposal.amount) || 0, 'USD')}</div>
               </div>
               <div>
                 <span className="text-gray-600">Proposer:</span>
