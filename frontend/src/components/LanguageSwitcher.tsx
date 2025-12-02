@@ -29,6 +29,8 @@ const LanguageSwitcher: React.FC = () => {
                 : "bg-gray-100 text-gray-700 hover:bg-gray-200"
             }`}
             title={lang.name}
+            aria-label={`Switch language to ${lang.name}`}
+            aria-pressed={i18n.language === lang.code}
           >
             {lang.flag} {lang.code.toUpperCase()}
           </button>
