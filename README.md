@@ -14,3 +14,10 @@ A comprehensive emergency coordination platform built with **React**, **TypeScri
 - **Volunteer Coordination System**
 - **Emergency Announcements**
 - **Analytics Dashboard**
+
+### Blockchain Features (Celo Network)
+- **WalletConnect Integration** - Secure wallet authentication
+- **Multi-Token Donations** - Support for CELO, cUSD, cEUR
+- **Multi-Signature Emergency Fund** - Secure fund management
+- **On-Chain Reputation System** - Track volunteer contributions
+- **Transparent Transactions** - All donations on-chain
