@@ -1,13 +1,13 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import WalletConnectProvider from '@walletconnect/web3-provider';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import WalletConnectProvider from "@walletconnect/web3-provider";
 
 interface WalletContextType {
   account: string | null;
   provider: any;
-  isConnected: boolean;
-  connect: () => Promise<void>;
-  disconnect: () => Promise<void>;
+  isConnecting: boolean;
   error: string | null;
+  connectWallet: () => Promise<void>;
+  disconnectWallet: () => void;
 }
 
 const WalletContext = createContext<WalletContextType | undefined>(undefined);
@@ -15,7 +15,7 @@ const WalletContext = createContext<WalletContextType | undefined>(undefined);
 export const useWallet = () => {
   const context = useContext(WalletContext);
   if (!context) {
-    throw new Error('useWallet must be used within a WalletProvider');
+    throw new Error("useWallet must be used within a WalletProvider");
   }
   return context;
 };
@@ -27,70 +27,66 @@ interface WalletProviderProps {
 export const WalletProvider: React.FC<WalletProviderProps> = ({ children }) => {
   const [account, setAccount] = useState<string | null>(null);
   const [provider, setProvider] = useState<any>(null);
-  const [isConnected, setIsConnected] = useState(false);
+  const [isConnecting, setIsConnecting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const connect = async () => {
+  const connectWallet = async () => {
     try {
+      setIsConnecting(true);
       setError(null);
-      const wcProvider = new WalletConnectProvider({
+
+      const walletConnectProvider = new WalletConnectProvider({
         rpc: {
-          1: "https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID", // Replace with your RPC URL
-          137: "https://polygon-rpc.com", // Polygon
-          56: "https://bsc-dataseed.binance.org/", // BSC
+          1: "https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID",
+          137: "https://polygon-rpc.com",
         },
         qrcode: true,
       });
 
-      await wcProvider.enable();
-      const accounts = await wcProvider.request({ method: "eth_accounts" });
+      await walletConnectProvider.enable();
+      const accounts = await walletConnectProvider.request({ method: "eth_accounts" });
       
-      setProvider(wcProvider);
+      setProvider(walletConnectProvider);
       setAccount(accounts[0]);
-      setIsConnected(true);
 
       // Listen for account changes
-      wcProvider.on("accountsChanged", (accounts: string[]) => {
+      walletConnectProvider.on("accountsChanged", (accounts: string[]) => {
         setAccount(accounts[0] || null);
       });
 
       // Listen for disconnection
-      wcProvider.on("disconnect", () => {
-        handleDisconnect();
+      walletConnectProvider.on("disconnect", () => {
+        setAccount(null);
+        setProvider(null);
       });
-
     } catch (err: any) {
       setError(err.message || "Failed to connect wallet");
       console.error("Wallet connection error:", err);
+    } finally {
+      setIsConnecting(false);
     }
   };
 
-  const handleDisconnect = () => {
+  const disconnectWallet = () => {
+    if (provider) {
+      provider.disconnect();
+    }
     setAccount(null);
     setProvider(null);
-    setIsConnected(false);
   };
 
-  const disconnect = async () => {
-    try {
-      if (provider) {
-        await provider.disconnect();
-      }
-      handleDisconnect();
-    } catch (err: any) {
-      setError(err.message || "Failed to disconnect wallet");
-      console.error("Wallet disconnection error:", err);
-    }
-  };
-
-  const value: WalletContextType = {
-    account,
-    provider,
-    isConnected,
-    connect,
-    disconnect,
-    error,
-  };
-
-  return <WalletContext.Provider value={value}>{children}</WalletContext.Provider>;
+  return (
+    <WalletContext.Provider
+      value={{
+        account,
+        provider,
+        isConnecting,
+        error,
+        connectWallet,
+        disconnectWallet,
+      }}
+    >
+      {children}
+    </WalletContext.Provider>
+  );
 };

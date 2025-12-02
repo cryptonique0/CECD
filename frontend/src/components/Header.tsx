@@ -17,6 +17,7 @@ import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useState } from 'react';
 import NotificationCenter from './NotificationCenter';
 import ConnectWalletButton from './ConnectWalletButton';
+import WalletInfo from './WalletInfo';
 
 export default function Header() {
   const { theme, setTheme } = useTheme();
@@ -84,8 +85,8 @@ export default function Header() {
         </div>
 
         <div className="flex items-center gap-2">
-          <ConnectWalletButton className="hidden sm:flex" />
-          
+          <WalletInfo />
+          <ConnectWalletButton />
           <NotificationCenter unreadCount={Number(unreadCount)} />
 
           <Button
