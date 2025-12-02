@@ -31,3 +31,9 @@ A comprehensive emergency coordination platform built with **React**, **TypeScri
 - **Offline Support** - PWA with service worker
 - **Multi-Language Support** - English, Spanish, French
 - **Mobile-First Design** - Progressive Web App
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Please read our [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
