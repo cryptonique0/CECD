@@ -1,0 +1,90 @@
+{
+  "app": {
+    "title": "Panel de Coordinación de Emergencias Comunitarias",
+    "subtitle": "Respuesta y coordinación de emergencias en tiempo real"
+  },
+  "navigation": {
+    "overview": "Resumen",
+    "incidents": "Incidentes",
+    "volunteers": "Voluntarios",
+    "announcements": "Anuncios",
+    "analytics": "Análisis",
+    "celoSupport": "Soporte Celo"
+  },
+  "dashboard": {
+    "welcome": "Bienvenido de nuevo",
+    "reportIncident": "Reportar Incidente"
+  },
+  "incidents": {
+    "title": "Incidentes",
+    "new": "Nuevo Incidente",
+    "type": "Tipo",
+    "severity": "Gravedad",
+    "status": "Estado",
+    "location": "Ubicación",
+    "description": "Descripción",
+    "timestamp": "Reportado"
+  },
+  "volunteers": {
+    "title": "Voluntarios",
+    "available": "Disponibles",
+    "assigned": "Asignados",
+    "register": "Registrarse como Voluntario",
+    "reputation": "Reputación",
+    "badges": "Insignias"
+  },
+  "donations": {
+    "title": "Donar",
+    "amount": "Cantidad",
+    "donate": "Enviar Donación",
+    "success": "¡Donación enviada con éxito!",
+    "selectToken": "Seleccionar Token",
+    "balance": "Saldo"
+  },
+  "wallet": {
+    "connect": "Conectar Billetera",
+    "disconnect": "Desconectar",
+    "connected": "Conectado",
+    "network": "Red",
+    "switchToCelo": "Cambiar a Celo"
+  },
+  "notifications": {
+    "title": "Notificaciones en Tiempo Real",
+    "connected": "Conectado",
+    "disconnected": "Desconectado",
+    "clearAll": "Limpiar Todo",
+    "noNotifications": "No hay notificaciones aún"
+  },
+  "ai": {
+    "prediction": "Predicción de Incidentes con IA",
+    "runAnalysis": "Ejecutar Análisis",
+    "analyzing": "Analizando...",
+    "riskLevel": "Nivel de Riesgo",
+    "confidence": "Confianza",
+    "factors": "Factores Contribuyentes"
+  },
+  "multisig": {
+    "title": "Fondo de Emergencia Multi-Firma",
+    "newProposal": "Nueva Propuesta",
+    "balance": "Saldo Total del Fondo",
+    "approve": "Aprobar",
+    "execute": "Ejecutar",
+    "executed": "Ejecutado",
+    "approvals": "Aprobaciones"
+  },
+  "offline": {
+    "online": "En línea",
+    "offline": "Estás actualmente sin conexión",
+    "syncing": "Sincronizando...",
+    "pendingChanges": "Cambios Pendientes"
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "cancel": "Cancelar",
+    "submit": "Enviar",
+    "save": "Guardar",
+    "delete": "Eliminar"
+  }
+}

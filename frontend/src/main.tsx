@@ -4,6 +4,7 @@ import { initEditor } from './hooks/useEditor';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import App from './App';
 import './index.css';
+import './i18n';
 import WalletConnectProvider from "@walletconnect/web3-provider";
 
 const queryClient = new QueryClient();

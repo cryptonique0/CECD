@@ -1,0 +1,90 @@
+{
+  "app": {
+    "title": "Community Emergency Coordination Dashboard",
+    "subtitle": "Real-time emergency response and coordination"
+  },
+  "navigation": {
+    "overview": "Overview",
+    "incidents": "Incidents",
+    "volunteers": "Volunteers",
+    "announcements": "Announcements",
+    "analytics": "Analytics",
+    "celoSupport": "Celo Support"
+  },
+  "dashboard": {
+    "welcome": "Welcome back",
+    "reportIncident": "Report Incident"
+  },
+  "incidents": {
+    "title": "Incidents",
+    "new": "New Incident",
+    "type": "Type",
+    "severity": "Severity",
+    "status": "Status",
+    "location": "Location",
+    "description": "Description",
+    "timestamp": "Reported"
+  },
+  "volunteers": {
+    "title": "Volunteers",
+    "available": "Available",
+    "assigned": "Assigned",
+    "register": "Register as Volunteer",
+    "reputation": "Reputation",
+    "badges": "Badges"
+  },
+  "donations": {
+    "title": "Donate",
+    "amount": "Amount",
+    "donate": "Send Donation",
+    "success": "Donation sent successfully!",
+    "selectToken": "Select Token",
+    "balance": "Balance"
+  },
+  "wallet": {
+    "connect": "Connect Wallet",
+    "disconnect": "Disconnect",
+    "connected": "Connected",
+    "network": "Network",
+    "switchToCelo": "Switch to Celo"
+  },
+  "notifications": {
+    "title": "Real-Time Notifications",
+    "connected": "Connected",
+    "disconnected": "Disconnected",
+    "clearAll": "Clear All",
+    "noNotifications": "No notifications yet"
+  },
+  "ai": {
+    "prediction": "AI Incident Prediction",
+    "runAnalysis": "Run Analysis",
+    "analyzing": "Analyzing...",
+    "riskLevel": "Risk Level",
+    "confidence": "Confidence",
+    "factors": "Contributing Factors"
+  },
+  "multisig": {
+    "title": "Multi-Signature Emergency Fund",
+    "newProposal": "New Proposal",
+    "balance": "Total Fund Balance",
+    "approve": "Approve",
+    "execute": "Execute",
+    "executed": "Executed",
+    "approvals": "Approvals"
+  },
+  "offline": {
+    "online": "Online",
+    "offline": "You are currently offline",
+    "syncing": "Syncing...",
+    "pendingChanges": "Pending Changes"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "save": "Save",
+    "delete": "Delete"
+  }
+}

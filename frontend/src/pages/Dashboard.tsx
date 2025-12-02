@@ -10,6 +10,12 @@ import AnnouncementBoard from '../components/AnnouncementBoard';
 import AnalyticsDashboard from '../components/AnalyticsDashboard';
 import CeloDonation from '../components/CeloDonation';
 import CeloNetworkStatus from '../components/CeloNetworkStatus';
+import StableCoinDonation from '../components/StableCoinDonation';
+import VolunteerReputationSystem from '../components/VolunteerReputationSystem';
+import OfflineSupport from '../components/OfflineSupport';
+import MultiSigWallet from '../components/MultiSigWallet';
+import AIPrediction from '../components/AIPrediction';
+import RealTimeNotifications from '../components/RealTimeNotifications';
 
 interface DashboardProps {
   userProfile: UserProfile;
@@ -73,9 +79,14 @@ export default function Dashboard({ userProfile }: DashboardProps) {
               <IncidentFeed limit={5} />
             </div>
             <div className="space-y-6">
+              <RealTimeNotifications />
+              <OfflineSupport />
               <CeloNetworkStatus />
-              <CeloDonation />
             </div>
+          </div>
+          <div className="grid gap-6 lg:grid-cols-2">
+            <AIPrediction />
+            <VolunteerReputationSystem />
           </div>
         </TabsContent>
 
@@ -103,20 +114,22 @@ export default function Dashboard({ userProfile }: DashboardProps) {
           <div className="grid gap-6 lg:grid-cols-2">
             <div className="space-y-6">
               <CeloNetworkStatus showDetails={true} />
-              <div className="p-6 bg-gradient-to-br from-green-50 to-yellow-50 rounded-lg border border-green-200">
-                <h3 className="text-xl font-bold mb-3 text-green-800">Why Celo?</h3>
-                <ul className="space-y-2 text-sm text-gray-700">
-                  <li>✅ <strong>Carbon Negative:</strong> Offset more carbon than the network produces</li>
-                  <li>✅ <strong>Mobile-First:</strong> Designed for accessibility via smartphones</li>
-                  <li>✅ <strong>Low Fees:</strong> Affordable transactions for emergency response</li>
-                  <li>✅ <strong>Fast Finality:</strong> Quick confirmation for urgent donations</li>
-                  <li>✅ <strong>Stable Coins:</strong> Support for cUSD and cEUR for stability</li>
-                </ul>
-              </div>
+              <StableCoinDonation />
             </div>
-            <div>
+            <div className="space-y-6">
               <CeloDonation />
+              <MultiSigWallet />
             </div>
+          </div>
+          <div className="p-6 bg-gradient-to-br from-green-50 to-yellow-50 rounded-lg border border-green-200">
+            <h3 className="text-xl font-bold mb-3 text-green-800">Why Celo?</h3>
+            <ul className="space-y-2 text-sm text-gray-700">
+              <li>✅ <strong>Carbon Negative:</strong> Offset more carbon than the network produces</li>
+              <li>✅ <strong>Mobile-First:</strong> Designed for accessibility via smartphones</li>
+              <li>✅ <strong>Low Fees:</strong> Affordable transactions for emergency response</li>
+              <li>✅ <strong>Fast Finality:</strong> Quick confirmation for urgent donations</li>
+              <li>✅ <strong>Stable Coins:</strong> Support for cUSD and cEUR for stability</li>
+            </ul>
           </div>
         </TabsContent>
       </Tabs>

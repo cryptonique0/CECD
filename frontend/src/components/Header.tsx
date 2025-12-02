@@ -18,6 +18,7 @@ import { useState } from 'react';
 import NotificationCenter from './NotificationCenter';
 import ConnectWalletButton from './ConnectWalletButton';
 import WalletInfo from './WalletInfo';
+import LanguageSwitcher from './LanguageSwitcher';
 
 export default function Header() {
   const { theme, setTheme } = useTheme();
@@ -85,6 +86,7 @@ export default function Header() {
         </div>
 
         <div className="flex items-center gap-2">
+          <LanguageSwitcher />
           <WalletInfo />
           <ConnectWalletButton />
           <NotificationCenter unreadCount={Number(unreadCount)} />
