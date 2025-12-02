@@ -1,13 +1,15 @@
 import { useState } from 'react';
 import { UserProfile, AppRole } from '../backend';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { LayoutDashboard, AlertCircle, Users, Megaphone, BarChart3 } from 'lucide-react';
+import { LayoutDashboard, AlertCircle, Users, Megaphone, BarChart3, Wallet } from 'lucide-react';
 import IncidentFeed from '../components/IncidentFeed';
 import IncidentMap from '../components/IncidentMap';
 import ReportIncidentDialog from '../components/ReportIncidentDialog';
 import VolunteerPanel from '../components/VolunteerPanel';
 import AnnouncementBoard from '../components/AnnouncementBoard';
 import AnalyticsDashboard from '../components/AnalyticsDashboard';
+import CeloDonation from '../components/CeloDonation';
+import CeloNetworkStatus from '../components/CeloNetworkStatus';
 
 interface DashboardProps {
   userProfile: UserProfile;
@@ -33,7 +35,7 @@ export default function Dashboard({ userProfile }: DashboardProps) {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid w-full grid-cols-2 lg:grid-cols-5 h-auto">
+        <TabsList className="grid w-full grid-cols-2 lg:grid-cols-6 h-auto">
           <TabsTrigger value="overview" className="gap-2">
             <LayoutDashboard className="h-4 w-4" />
             <span className="hidden sm:inline">Overview</span>
@@ -58,12 +60,22 @@ export default function Dashboard({ userProfile }: DashboardProps) {
               <span className="hidden sm:inline">Analytics</span>
             </TabsTrigger>
           )}
+          <TabsTrigger value="celo" className="gap-2">
+            <Wallet className="h-4 w-4" />
+            <span className="hidden sm:inline">Celo Support</span>
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="space-y-6">
-          <div className="grid gap-6 lg:grid-cols-2">
-            <IncidentMap />
-            <IncidentFeed limit={5} />
+          <div className="grid gap-6 lg:grid-cols-3">
+            <div className="lg:col-span-2 space-y-6">
+              <IncidentMap />
+              <IncidentFeed limit={5} />
+            </div>
+            <div className="space-y-6">
+              <CeloNetworkStatus />
+              <CeloDonation />
+            </div>
           </div>
         </TabsContent>
 
@@ -86,6 +98,27 @@ export default function Dashboard({ userProfile }: DashboardProps) {
             <AnalyticsDashboard />
           </TabsContent>
         )}
+
+        <TabsContent value="celo" className="space-y-6">
+          <div className="grid gap-6 lg:grid-cols-2">
+            <div className="space-y-6">
+              <CeloNetworkStatus showDetails={true} />
+              <div className="p-6 bg-gradient-to-br from-green-50 to-yellow-50 rounded-lg border border-green-200">
+                <h3 className="text-xl font-bold mb-3 text-green-800">Why Celo?</h3>
+                <ul className="space-y-2 text-sm text-gray-700">
+                  <li>✅ <strong>Carbon Negative:</strong> Offset more carbon than the network produces</li>
+                  <li>✅ <strong>Mobile-First:</strong> Designed for accessibility via smartphones</li>
+                  <li>✅ <strong>Low Fees:</strong> Affordable transactions for emergency response</li>
+                  <li>✅ <strong>Fast Finality:</strong> Quick confirmation for urgent donations</li>
+                  <li>✅ <strong>Stable Coins:</strong> Support for cUSD and cEUR for stability</li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <CeloDonation />
+            </div>
+          </div>
+        </TabsContent>
       </Tabs>
     </div>
   );

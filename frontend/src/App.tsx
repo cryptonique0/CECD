@@ -3,6 +3,7 @@ import { useInternetIdentity } from './hooks/useInternetIdentity';
 import { useGetCallerUserProfile, useInitializeDemoData } from './hooks/useQueries';
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from '@/components/ui/sonner';
+import { WalletProvider } from './contexts/WalletContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import LoginScreen from './pages/LoginScreen';
@@ -126,17 +127,19 @@ export default function App() {
   // Profile exists - show dashboard (userProfile is guaranteed to be defined here)
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-      <div className="flex min-h-screen flex-col bg-background">
-        <Header />
-        <main className="flex-1">
-          <Suspense fallback={<LoadingScreen />}>
-            <Dashboard userProfile={userProfile} />
-          </Suspense>
-        </main>
-        <Footer />
-        <NotificationPopup />
-        <Toaster />
-      </div>
+      <WalletProvider>
+        <div className="flex min-h-screen flex-col bg-background">
+          <Header />
+          <main className="flex-1">
+            <Suspense fallback={<LoadingScreen />}>
+              <Dashboard userProfile={userProfile} />
+            </Suspense>
+          </main>
+          <Footer />
+          <NotificationPopup />
+          <Toaster />
+        </div>
+      </WalletProvider>
     </ThemeProvider>
   );
 }
