@@ -1,5 +1,8 @@
 # CECD - Community Emergency Coordination Dashboard
 
+![Build Status](https://img.shields.io/github/actions/workflow/status/cryptonique0/CECD/ci.yml?branch=main)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+
 ## 🚨 Emergency Response Platform with Blockchain Integration
 
 A comprehensive emergency coordination platform built with **React**, **TypeScript**, and **Celo blockchain** for transparent and efficient disaster response.
