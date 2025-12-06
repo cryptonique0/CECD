@@ -6,12 +6,14 @@ import {
   stringAsciiCV, 
   PostConditionMode,
   AnchorMode,
+  makeStandardSTXPostCondition,
+  FungibleConditionCode,
 } from '@stacks/transactions';
 import { Bitcoin, Send, Loader2 } from 'lucide-react';
 import { STACKS_CONTRACTS, STACKS_NETWORK } from '../lib/stacks-config';
 
 const StacksDonation: React.FC = () => {
-  const { address, network, isConnected, userSession } = useStacks();
+  const { address, network, networkInstance, isConnected, userSession } = useStacks();
   const [amount, setAmount] = useState('');
   const [message, setMessage] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
@@ -30,8 +32,15 @@ const StacksDonation: React.FC = () => {
       const contractAddress = STACKS_CONTRACTS[network].donation;
       const [addr, contractName] = contractAddress.split('.');
 
+      // Create post condition to ensure correct STX amount is transferred
+      const postCondition = makeStandardSTXPostCondition(
+        address,
+        FungibleConditionCode.Equal,
+        amountMicroStx
+      );
+
       const options = {
-        network: network === 'mainnet' ? 'mainnet' : 'testnet',
+        network: networkInstance,
         anchorMode: AnchorMode.Any,
         contractAddress: addr,
         contractName: contractName,
@@ -40,7 +49,8 @@ const StacksDonation: React.FC = () => {
           uintCV(amountMicroStx),
           stringAsciiCV(message || 'Emergency response donation'),
         ],
-        postConditionMode: PostConditionMode.Allow,
+        postConditions: [postCondition],
+        postConditionMode: PostConditionMode.Deny,
         onFinish: (data: any) => {
           setTxId(data.txId);
           setAmount('');

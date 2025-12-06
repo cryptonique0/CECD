@@ -7,5 +7,9 @@
     "url": "https://github.com/cryptonique0/CECD.git"
   },
   "author": "CECD Team",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@stacks/connect": "^8.2.3",
+    "@stacks/transactions": "^7.3.0"
+  }
 }

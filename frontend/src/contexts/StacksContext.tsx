@@ -1,10 +1,12 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { AppConfig, UserSession, showConnect } from '@stacks/connect';
+import { StacksMainnet, StacksTestnet } from '@stacks/network';
 import { StacksNetworkType } from '../lib/stacks-config';
 
 interface StacksContextType {
   address: string | null;
   network: StacksNetworkType;
+  networkInstance: StacksMainnet | StacksTestnet;
   isConnected: boolean;
   connect: () => Promise<void>;
   disconnect: () => void;
@@ -24,6 +26,7 @@ export const StacksProvider: React.FC<StacksProviderProps> = ({ children }) => {
   const [userSession] = useState(() => new UserSession({ appConfig }));
   const [address, setAddress] = useState<string | null>(null);
   const [network, setNetwork] = useState<StacksNetworkType>('testnet');
+  const [networkInstance, setNetworkInstance] = useState<StacksMainnet | StacksTestnet>(() => new StacksTestnet());
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
@@ -60,6 +63,7 @@ export const StacksProvider: React.FC<StacksProviderProps> = ({ children }) => {
 
   const switchNetwork = (newNetwork: StacksNetworkType) => {
     setNetwork(newNetwork);
+    setNetworkInstance(newNetwork === 'mainnet' ? new StacksMainnet() : new StacksTestnet());
     if (isConnected && userSession.isUserSignedIn()) {
       const userData = userSession.loadUserData();
       const addr = newNetwork === 'mainnet'
@@ -74,6 +78,7 @@ export const StacksProvider: React.FC<StacksProviderProps> = ({ children }) => {
       value={{
         address,
         network,
+        networkInstance,
         isConnected,
         connect,
         disconnect,
