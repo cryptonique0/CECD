@@ -1,7 +1,19 @@
 import { useState } from 'react';
 import { UserProfile, AppRole } from '../backend';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { LayoutDashboard, AlertCircle, Users, Megaphone, BarChart3, Wallet } from 'lucide-react';
+import {
+  LayoutDashboard,
+  AlertCircle,
+  Users,
+  Megaphone,
+  BarChart3,
+  Wallet,
+  BellRing,
+  ClipboardCheck,
+  History,
+  BarChart4,
+  User as UserIcon,
+} from 'lucide-react';
 import IncidentFeed from '../components/IncidentFeed';
 import IncidentMap from '../components/IncidentMap';
 import ReportIncidentDialog from '../components/ReportIncidentDialog';
@@ -16,6 +28,12 @@ import OfflineSupport from '../components/OfflineSupport';
 import MultiSigWallet from '../components/MultiSigWallet';
 import AIPrediction from '../components/AIPrediction';
 import RealTimeNotifications from '../components/RealTimeNotifications';
+import IncidentFilter from '../components/IncidentFilter';
+import VolunteerAssignmentSystem from '../components/VolunteerAssignmentSystem';
+import FundAnalyticsDashboard from '../components/FundAnalyticsDashboard';
+import EmergencyAlertsSystem from '../components/EmergencyAlertsSystem';
+import IncidentHistoryReporting from '../components/IncidentHistoryReporting';
+import UserProfileManager from '../components/UserProfileManager';
 
 interface DashboardProps {
   userProfile: UserProfile;
@@ -41,7 +59,7 @@ export default function Dashboard({ userProfile }: DashboardProps) {
       </div>
 
       <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-        <TabsList className="grid w-full grid-cols-2 lg:grid-cols-6 h-auto">
+        <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 lg:grid-cols-9 h-auto">
           <TabsTrigger value="overview" className="gap-2">
             <LayoutDashboard className="h-4 w-4" />
             <span className="hidden sm:inline">Overview</span>
@@ -50,10 +68,20 @@ export default function Dashboard({ userProfile }: DashboardProps) {
             <AlertCircle className="h-4 w-4" />
             <span className="hidden sm:inline">Incidents</span>
           </TabsTrigger>
+          <TabsTrigger value="alerts" className="gap-2">
+            <BellRing className="h-4 w-4" />
+            <span className="hidden sm:inline">Alerts</span>
+          </TabsTrigger>
           {(isVolunteer || isEmergencyDesk) && (
             <TabsTrigger value="volunteers" className="gap-2">
               <Users className="h-4 w-4" />
               <span className="hidden sm:inline">Volunteers</span>
+            </TabsTrigger>
+          )}
+          {(isVolunteer || isEmergencyDesk) && (
+            <TabsTrigger value="assignments" className="gap-2">
+              <ClipboardCheck className="h-4 w-4" />
+              <span className="hidden sm:inline">Assignments</span>
             </TabsTrigger>
           )}
           <TabsTrigger value="announcements" className="gap-2">
@@ -66,6 +94,22 @@ export default function Dashboard({ userProfile }: DashboardProps) {
               <span className="hidden sm:inline">Analytics</span>
             </TabsTrigger>
           )}
+          {(isEmergencyDesk || isCommunityLeader) && (
+            <TabsTrigger value="funds" className="gap-2">
+              <BarChart4 className="h-4 w-4" />
+              <span className="hidden sm:inline">Funds</span>
+            </TabsTrigger>
+          )}
+          {(isEmergencyDesk || isCommunityLeader) && (
+            <TabsTrigger value="history" className="gap-2">
+              <History className="h-4 w-4" />
+              <span className="hidden sm:inline">History</span>
+            </TabsTrigger>
+          )}
+          <TabsTrigger value="profile" className="gap-2">
+            <UserIcon className="h-4 w-4" />
+            <span className="hidden sm:inline">Profile</span>
+          </TabsTrigger>
           <TabsTrigger value="celo" className="gap-2">
             <Wallet className="h-4 w-4" />
             <span className="hidden sm:inline">Celo Support</span>
@@ -91,12 +135,21 @@ export default function Dashboard({ userProfile }: DashboardProps) {
         </TabsContent>
 
         <TabsContent value="incidents">
+          <div className="mb-6">
+            <IncidentFilter />
+          </div>
           <IncidentFeed />
         </TabsContent>
 
         {(isVolunteer || isEmergencyDesk) && (
           <TabsContent value="volunteers">
             <VolunteerPanel userProfile={userProfile} />
+          </TabsContent>
+        )}
+
+        {(isVolunteer || isEmergencyDesk) && (
+          <TabsContent value="assignments">
+            <VolunteerAssignmentSystem />
           </TabsContent>
         )}
 
@@ -109,6 +162,26 @@ export default function Dashboard({ userProfile }: DashboardProps) {
             <AnalyticsDashboard />
           </TabsContent>
         )}
+
+        {(isEmergencyDesk || isCommunityLeader) && (
+          <TabsContent value="funds">
+            <FundAnalyticsDashboard />
+          </TabsContent>
+        )}
+
+        <TabsContent value="alerts">
+          <EmergencyAlertsSystem />
+        </TabsContent>
+
+        {(isEmergencyDesk || isCommunityLeader) && (
+          <TabsContent value="history">
+            <IncidentHistoryReporting />
+          </TabsContent>
+        )}
+
+        <TabsContent value="profile">
+          <UserProfileManager />
+        </TabsContent>
 
         <TabsContent value="celo" className="space-y-6">
           <div className="grid gap-6 lg:grid-cols-2">
