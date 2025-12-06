@@ -4,6 +4,7 @@ import { useGetCallerUserProfile, useInitializeDemoData } from './hooks/useQueri
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from '@/components/ui/sonner';
 import { WalletProvider } from './contexts/WalletContext';
+import { StacksProvider } from './contexts/StacksContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import LoginScreen from './pages/LoginScreen';
@@ -128,7 +129,8 @@ export default function App() {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <WalletProvider>
-        <div className="flex min-h-screen flex-col bg-background">
+        <StacksProvider>
+          <div className="flex min-h-screen flex-col bg-background">
           <Header />
           <main className="flex-1">
             <Suspense fallback={<LoadingScreen />}>
@@ -138,7 +140,8 @@ export default function App() {
           <Footer />
           <NotificationPopup />
           <Toaster />
-        </div>
+          </div>
+        </StacksProvider>
       </WalletProvider>
     </ThemeProvider>
   );

@@ -34,6 +34,9 @@ import FundAnalyticsDashboard from '../components/FundAnalyticsDashboard';
 import EmergencyAlertsSystem from '../components/EmergencyAlertsSystem';
 import IncidentHistoryReporting from '../components/IncidentHistoryReporting';
 import UserProfileManager from '../components/UserProfileManager';
+import StacksNetworkStatus from '../components/StacksNetworkStatus';
+import StacksDonation from '../components/StacksDonation';
+import StacksAnalytics from '../components/StacksAnalytics';
 
 interface DashboardProps {
   userProfile: UserProfile;
@@ -113,6 +116,10 @@ export default function Dashboard({ userProfile }: DashboardProps) {
           <TabsTrigger value="celo" className="gap-2">
             <Wallet className="h-4 w-4" />
             <span className="hidden sm:inline">Celo Support</span>
+          </TabsTrigger>
+          <TabsTrigger value="stacks" className="gap-2">
+            <Wallet className="h-4 w-4" />
+            <span className="hidden sm:inline">Stacks (BTC L2)</span>
           </TabsTrigger>
         </TabsList>
 
@@ -202,6 +209,28 @@ export default function Dashboard({ userProfile }: DashboardProps) {
               <li>✅ <strong>Low Fees:</strong> Affordable transactions for emergency response</li>
               <li>✅ <strong>Fast Finality:</strong> Quick confirmation for urgent donations</li>
               <li>✅ <strong>Stable Coins:</strong> Support for cUSD and cEUR for stability</li>
+            </ul>
+          </div>
+        </TabsContent>
+
+        <TabsContent value="stacks" className="space-y-6">
+          <div className="grid gap-6 lg:grid-cols-2">
+            <div className="space-y-6">
+              <StacksNetworkStatus />
+              <StacksDonation />
+            </div>
+            <div className="space-y-6">
+              <StacksAnalytics />
+            </div>
+          </div>
+          <div className="p-6 bg-gradient-to-br from-orange-50 to-yellow-50 rounded-lg border border-orange-200">
+            <h3 className="text-xl font-bold mb-3 text-orange-800">Why Stacks?</h3>
+            <ul className="space-y-2 text-sm text-gray-700">
+              <li>✅ <strong>Bitcoin Security:</strong> Inherit Bitcoin's proof-of-work security</li>
+              <li>✅ <strong>Smart Contracts:</strong> Clarity language for predictable execution</li>
+              <li>✅ <strong>sBTC Integration:</strong> Native Bitcoin wrapping for DeFi</li>
+              <li>✅ <strong>Decentralized:</strong> No custodians or intermediaries</li>
+              <li>✅ <strong>Bitcoin L2:</strong> Settle transactions on Bitcoin blockchain</li>
             </ul>
           </div>
         </TabsContent>
