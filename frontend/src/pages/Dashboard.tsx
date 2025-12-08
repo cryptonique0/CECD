@@ -13,6 +13,13 @@ import {
   History,
   BarChart4,
   User as UserIcon,
+  MapPin,
+  MessageSquare,
+  FileText,
+  Activity,
+  Network,
+  Smartphone,
+  Bot,
 } from 'lucide-react';
 import IncidentFeed from '../components/IncidentFeed';
 import IncidentMap from '../components/IncidentMap';
@@ -41,6 +48,15 @@ import StacksNetworkStatus from '../components/StacksNetworkStatus';
 import StacksDonation from '../components/StacksDonation';
 import StacksAnalytics from '../components/StacksAnalytics';
 import CeloGrantPayment from '../components/CeloGrantPayment';
+import EvacuationCenterManagement from '../components/EvacuationCenterManagement';
+import InAppMessaging from '../components/InAppMessaging';
+import ReportGeneration from '../components/ReportGeneration';
+import GeoFencingAlerts from '../components/GeoFencingAlerts';
+import WearableHealthMonitoring from '../components/WearableHealthMonitoring';
+import APIMonitoring from '../components/APIMonitoring';
+import BulkVolunteerAssignment from '../components/BulkVolunteerAssignment';
+import MobileAppDeployment from '../components/MobileAppDeployment';
+import AIChatbot from '../components/AIChatbot';
 
 interface DashboardProps {
   userProfile: UserProfile;
@@ -124,6 +140,42 @@ export default function Dashboard({ userProfile }: DashboardProps) {
           <TabsTrigger value="stacks" className="gap-2">
             <Wallet className="h-4 w-4" />
             <span className="hidden sm:inline">Stacks (BTC L2)</span>
+          </TabsTrigger>
+          <TabsTrigger value="evacuation" className="gap-2">
+            <MapPin className="h-4 w-4" />
+            <span className="hidden sm:inline">Evacuation</span>
+          </TabsTrigger>
+          <TabsTrigger value="messaging" className="gap-2">
+            <MessageSquare className="h-4 w-4" />
+            <span className="hidden sm:inline">Messaging</span>
+          </TabsTrigger>
+          <TabsTrigger value="reports" className="gap-2">
+            <FileText className="h-4 w-4" />
+            <span className="hidden sm:inline">Reports</span>
+          </TabsTrigger>
+          <TabsTrigger value="geofencing" className="gap-2">
+            <MapPin className="h-4 w-4" />
+            <span className="hidden sm:inline">Geofence</span>
+          </TabsTrigger>
+          <TabsTrigger value="health" className="gap-2">
+            <Activity className="h-4 w-4" />
+            <span className="hidden sm:inline">Health</span>
+          </TabsTrigger>
+          <TabsTrigger value="api-monitor" className="gap-2">
+            <Network className="h-4 w-4" />
+            <span className="hidden sm:inline">API Status</span>
+          </TabsTrigger>
+          <TabsTrigger value="bulk-assign" className="gap-2">
+            <Users className="h-4 w-4" />
+            <span className="hidden sm:inline">Bulk Assign</span>
+          </TabsTrigger>
+          <TabsTrigger value="mobile" className="gap-2">
+            <Smartphone className="h-4 w-4" />
+            <span className="hidden sm:inline">Mobile</span>
+          </TabsTrigger>
+          <TabsTrigger value="ai-chat" className="gap-2">
+            <Bot className="h-4 w-4" />
+            <span className="hidden sm:inline">AI Chat</span>
           </TabsTrigger>
         </TabsList>
 
@@ -243,6 +295,42 @@ export default function Dashboard({ userProfile }: DashboardProps) {
               <li>✅ <strong>Bitcoin L2:</strong> Settle transactions on Bitcoin blockchain</li>
             </ul>
           </div>
+        </TabsContent>
+
+        <TabsContent value="evacuation">
+          <EvacuationCenterManagement />
+        </TabsContent>
+
+        <TabsContent value="messaging">
+          <InAppMessaging />
+        </TabsContent>
+
+        <TabsContent value="reports">
+          <ReportGeneration />
+        </TabsContent>
+
+        <TabsContent value="geofencing">
+          <GeoFencingAlerts />
+        </TabsContent>
+
+        <TabsContent value="health">
+          <WearableHealthMonitoring />
+        </TabsContent>
+
+        <TabsContent value="api-monitor">
+          <APIMonitoring />
+        </TabsContent>
+
+        <TabsContent value="bulk-assign">
+          <BulkVolunteerAssignment />
+        </TabsContent>
+
+        <TabsContent value="mobile">
+          <MobileAppDeployment />
+        </TabsContent>
+
+        <TabsContent value="ai-chat">
+          <AIChatbot />
         </TabsContent>
       </Tabs>
     </div>
