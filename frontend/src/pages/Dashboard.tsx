@@ -23,6 +23,9 @@ import AnalyticsDashboard from '../components/AnalyticsDashboard';
 import CeloDonation from '../components/CeloDonation';
 import CeloNetworkStatus from '../components/CeloNetworkStatus';
 import StableCoinDonation from '../components/StableCoinDonation';
+import CeloGrantDisbursement from '../components/CeloGrantDisbursement';
+import CeloCarbonAnalytics from '../components/CeloCarbonAnalytics';
+import CeloValidatorHealth from '../components/CeloValidatorHealth';
 import VolunteerReputationSystem from '../components/VolunteerReputationSystem';
 import OfflineSupport from '../components/OfflineSupport';
 import MultiSigWallet from '../components/MultiSigWallet';
@@ -200,6 +203,11 @@ export default function Dashboard({ userProfile }: DashboardProps) {
               <CeloDonation />
               <MultiSigWallet />
             </div>
+          </div>
+          <div className="grid gap-6 lg:grid-cols-3">
+            <CeloGrantDisbursement />
+            <CeloCarbonAnalytics />
+            <CeloValidatorHealth />
           </div>
           <div className="p-6 bg-gradient-to-br from-green-50 to-yellow-50 rounded-lg border border-green-200">
             <h3 className="text-xl font-bold mb-3 text-green-800">Why Celo?</h3>
