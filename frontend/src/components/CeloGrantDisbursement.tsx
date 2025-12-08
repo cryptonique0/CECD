@@ -1,48 +1,9 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import { Coins, Send, TrendingUp, ShieldCheck } from 'lucide-react';
-
-type GrantStatus = 'pending' | 'approved' | 'sent' | 'settled';
-
-interface GrantDisbursement {
-  id: string;
-  project: string;
-  amount: number;
-  currency: 'cUSD' | 'cEUR';
-  status: GrantStatus;
-  recipient: string;
-  deadline: string;
-}
+import { useGrantData } from '../hooks/useCeloData';
 
 const CeloGrantDisbursement: React.FC = () => {
-  const [grants] = useState<GrantDisbursement[]>([
-    {
-      id: 'G-1042',
-      project: 'Medical Relief Pods',
-      amount: 12500,
-      currency: 'cUSD',
-      status: 'approved',
-      recipient: '0x9f1...b27',
-      deadline: '2026-01-10',
-    },
-    {
-      id: 'G-1043',
-      project: 'Clean Water Units',
-      amount: 8200,
-      currency: 'cUSD',
-      status: 'sent',
-      recipient: '0x7a2...cd3',
-      deadline: '2026-01-05',
-    },
-    {
-      id: 'G-1044',
-      project: 'Emergency Shelter Kits',
-      amount: 5600,
-      currency: 'cEUR',
-      status: 'pending',
-      recipient: '0x44a...91c',
-      deadline: '2026-01-18',
-    },
-  ]);
+  const { data: grants = [] } = useGrantData();
 
   const totals = useMemo(() => {
     const approved = grants.filter((g) => g.status === 'approved').reduce((sum, g) => sum + g.amount, 0);
@@ -50,7 +11,7 @@ const CeloGrantDisbursement: React.FC = () => {
     return { approved, sent };
   }, [grants]);
 
-  const statusColor = (status: GrantStatus) => {
+  const statusColor = (status: string) => {
     switch (status) {
       case 'pending':
         return 'bg-gray-100 text-gray-800';

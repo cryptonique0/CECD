@@ -1,23 +1,11 @@
 import React from 'react';
 import { Activity, Shield, Wifi, Link2 } from 'lucide-react';
-
-interface ValidatorNode {
-  id: string;
-  name: string;
-  uptime: number;
-  latency: number;
-  status: 'healthy' | 'degraded' | 'down';
-  location: string;
-}
+import { useValidatorHealth } from '../hooks/useCeloData';
 
 const CeloValidatorHealth: React.FC = () => {
-  const validators: ValidatorNode[] = [
-    { id: 'val-1', name: 'Validator One', uptime: 99.98, latency: 42, status: 'healthy', location: 'Frankfurt' },
-    { id: 'val-2', name: 'Validator Two', uptime: 99.91, latency: 55, status: 'healthy', location: 'Iowa' },
-    { id: 'val-3', name: 'Validator Three', uptime: 99.40, latency: 120, status: 'degraded', location: 'Mumbai' },
-  ];
+  const { data: validators = [] } = useValidatorHealth();
 
-  const statusColor = (status: ValidatorNode['status']) => {
+  const statusColor = (status: string) => {
     switch (status) {
       case 'healthy':
         return 'bg-green-100 text-green-800';

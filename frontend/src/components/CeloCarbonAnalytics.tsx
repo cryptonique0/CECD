@@ -1,10 +1,13 @@
 import React from 'react';
 import { Leaf, Recycle, Gauge } from 'lucide-react';
+import { useCeloCarbonOffset } from '../hooks/useCeloData';
 
 const CeloCarbonAnalytics: React.FC = () => {
+  const { data: carbonData } = useCeloCarbonOffset();
+
   const metrics = [
-    { label: 'Offset Purchased', value: '42.5 tons', detail: 'Retired via Toucan/Refi partners' },
-    { label: 'Renewable Coverage', value: '78%', detail: 'Transactions powered by green mix' },
+    { label: 'Offset Purchased', value: carbonData?.offset.toString() || '42.5 tons', detail: 'Retired via Toucan/Refi partners' },
+    { label: 'Renewable Coverage', value: carbonData?.renewable.toString() + '%' || '78%', detail: 'Transactions powered by green mix' },
     { label: 'Per-Donation Footprint', value: '0.12 kg CO2', detail: 'Avg. on-chain transaction footprint' },
     { label: 'Communities Served', value: '18', detail: 'Regions benefiting from green deployments' },
   ];
