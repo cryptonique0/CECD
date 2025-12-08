@@ -1,6 +1,7 @@
 {
   "name": "cecd-frontend",
   "version": "2.0.1",
+  "type": "module",
   "description": "Frontend for the Community Emergency Coordination Dashboard (CECD)",
   "main": "src/main.tsx",
   "scripts": {
