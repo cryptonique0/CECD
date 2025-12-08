@@ -40,6 +40,7 @@ import UserProfileManager from '../components/UserProfileManager';
 import StacksNetworkStatus from '../components/StacksNetworkStatus';
 import StacksDonation from '../components/StacksDonation';
 import StacksAnalytics from '../components/StacksAnalytics';
+import CeloGrantPayment from '../components/CeloGrantPayment';
 
 interface DashboardProps {
   userProfile: UserProfile;
@@ -219,6 +220,7 @@ export default function Dashboard({ userProfile }: DashboardProps) {
               <li>✅ <strong>Stable Coins:</strong> Support for cUSD and cEUR for stability</li>
             </ul>
           </div>
+          <CeloGrantPayment />
         </TabsContent>
 
         <TabsContent value="stacks" className="space-y-6">
