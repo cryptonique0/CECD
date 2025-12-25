@@ -1,0 +1,15 @@
+// frontend/src/components/ui/skeleton.tsx
+import React from 'react';
+
+const Skeleton = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => (
+    <div
+      ref={ref}
+      className={`animate-pulse rounded-md bg-slate-200 ${className || ''}`}
+      {...props}
+    />
+  )
+);
+Skeleton.displayName = 'Skeleton';
+
+export { Skeleton };

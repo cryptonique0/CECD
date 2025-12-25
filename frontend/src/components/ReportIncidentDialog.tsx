@@ -163,7 +163,11 @@ export default function ReportIncidentDialog() {
       if (imageFile) {
         const arrayBuffer = await imageFile.arrayBuffer();
         const uint8Array = new Uint8Array(arrayBuffer);
-        imageBlob = ExternalBlob.fromBytes(uint8Array);
+        imageBlob = {
+          id: `blob_${Date.now()}`,
+          data: uint8Array,
+          mimeType: imageFile.type
+        };
       }
 
       // Use translated description if available
