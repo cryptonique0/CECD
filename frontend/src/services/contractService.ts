@@ -2,6 +2,7 @@
 // Smart Contract Integration Service for Emergency Coordination Dashboard
 
 import { ethers } from 'ethers';
+import type { Eip1193Provider } from 'ethers';
 
 // Contract configuration
 export const CONTRACT_CONFIG = {
@@ -292,7 +293,7 @@ export const CONTRACT_CONFIG = {
 
 // Contract Service Class
 export class ContractService {
-  private provider: ethers.Provider | null = null;
+  private provider: ethers.BrowserProvider | null = null;
   private signer: ethers.Signer | null = null;
   private contract: ethers.Contract | null = null;
 
@@ -304,7 +305,8 @@ export class ContractService {
     if (!window.ethereum) {
       throw new Error('MetaMask or compatible wallet not installed');
     }
-    this.provider = new ethers.BrowserProvider(window.ethereum);
+    const ethereum = window.ethereum as unknown as Eip1193Provider;
+    this.provider = new ethers.BrowserProvider(ethereum);
   }
 
   async connectWallet() {
@@ -312,13 +314,18 @@ export class ContractService {
       if (!this.provider) {
         await this.initializeProvider();
       }
-      this.signer = await this.provider!.getSigner();
+      // Request accounts from the injected provider
+      if (typeof (window as any).ethereum?.request === 'function') {
+        await (window as any).ethereum.request({ method: 'eth_requestAccounts' });
+      }
+      const signer = await this.provider!.getSigner();
+      this.signer = signer;
       this.contract = new ethers.Contract(
         CONTRACT_CONFIG.ADDRESS,
         CONTRACT_CONFIG.ABI,
-        this.signer
+        signer
       );
-      return await this.signer.getAddress();
+      return await signer.getAddress();
     } catch (error) {
       console.error('Error connecting wallet:', error);
       throw error;
