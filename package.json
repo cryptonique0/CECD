@@ -8,6 +8,11 @@
   },
   "author": "CECD Team",
   "license": "MIT",
+  "scripts": {
+    "build": "cd frontend && npm run build",
+    "dev": "cd frontend && npm run dev",
+    "preview": "cd frontend && npm run preview"
+  },
   "dependencies": {
     "@stacks/connect": "^8.2.3",
     "@stacks/transactions": "^7.3.0"
