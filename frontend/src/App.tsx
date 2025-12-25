@@ -1,8 +1,8 @@
 import { useEffect, Suspense } from 'react';
-import { useInternetIdentity } from './hooks/useInternetIdentity';
+import { useInternetIdentity } from './hooks/useInternetIdentity.tsx';
 import { useGetCallerUserProfile, useInitializeDemoData } from './hooks/useQueries';
 import { ThemeProvider } from 'next-themes';
-import { Toaster } from '@/components/ui/sonner';
+import { Toaster } from 'sonner';
 import { WalletProvider } from './contexts/WalletContext';
 import { StacksProvider } from './contexts/StacksContext';
 import Header from './components/Header';
