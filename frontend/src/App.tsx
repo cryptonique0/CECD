@@ -1,8 +1,7 @@
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from 'sonner';
 import { StacksProvider } from './contexts/StacksContext';
-// import Dashboard from './pages/Dashboard';
-import TestDashboard from './pages/TestDashboard';
+import Dashboard from './pages/Dashboard';
 
 export default function App() {
   console.log('App component rendering');
@@ -11,7 +10,7 @@ export default function App() {
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
       <StacksProvider>
         <div className="flex min-h-screen flex-col bg-background">
-          <TestDashboard />
+          <Dashboard />
           <Toaster />
         </div>
       </StacksProvider>
