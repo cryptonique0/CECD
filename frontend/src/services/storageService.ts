@@ -24,10 +24,14 @@ class StorageService {
     if (!files || files.length === 0) return [];
 
     // If we have a Web3.Storage token, try uploading to IPFS
+    // Note: web3.storage package must be installed: npm install web3.storage
     if (this.token) {
       try {
-        const mod = await import('web3.storage');
-        const Web3Storage = (mod as any).Web3Storage || (mod as any).default?.Web3Storage || (mod as any);
+        // Dynamic import will only succeed if package is installed
+        const { Web3Storage } = await import('web3.storage').catch(() => {
+          throw new Error('web3.storage package not installed');
+        });
+        
         const client = new Web3Storage({ token: this.token });
         const cid = await client.put(files, { wrapWithDirectory: true });
         const attachments = files.map((f) => ({
@@ -45,7 +49,7 @@ class StorageService {
         }
         return attachments;
       } catch (err) {
-        console.warn('Web3.Storage not available, falling back to IndexedDB:', err);
+        console.warn('Web3.Storage not available (package may not be installed), using IndexedDB fallback:', err);
         // Fallthrough to IndexedDB
       }
     }
