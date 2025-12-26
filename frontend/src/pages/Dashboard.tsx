@@ -3,6 +3,8 @@ import { Button } from '@/components/ui/button';
 import { AlertCircle } from 'lucide-react';
 
 export default function Dashboard() {
+  console.log('Dashboard component rendering');
+  
   return (
     <div className="container mx-auto py-10">
       <Card>
