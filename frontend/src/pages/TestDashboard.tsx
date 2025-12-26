@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 export default function TestDashboard() {
   const [isConnected, setIsConnected] = useState(false);
@@ -9,6 +9,13 @@ export default function TestDashboard() {
     { id: 1, title: 'Fire Emergency', category: 'Fire', severity: 'High', location: 'Downtown', timestamp: '2025-12-26 10:30' },
     { id: 2, title: 'Medical Emergency', category: 'Medical', severity: 'Medium', location: 'Hospital Area', timestamp: '2025-12-26 09:15' },
   ]);
+  // Report Incident form state
+  const [reportTitle, setReportTitle] = useState('');
+  const [reportCategory, setReportCategory] = useState('Other');
+  const [reportSeverity, setReportSeverity] = useState('Medium');
+  const [reportLocation, setReportLocation] = useState('');
+  const [reportFiles, setReportFiles] = useState<File[]>([]);
+  const [reportError, setReportError] = useState<string | null>(null);
 
   const handleConnect = async () => {
     console.log('Connect button clicked');
@@ -39,20 +46,7 @@ export default function TestDashboard() {
   };
 
     const handleReportIncident = () => {
-      const title = prompt('Enter incident title:');
-      if (title) {
-        const newIncident = {
-          id: incidents.length + 1,
-          title,
-          category: 'Other',
-          severity: 'Medium',
-          location: 'Current Location',
-          timestamp: new Date().toLocaleString()
-        };
-        setIncidents([newIncident, ...incidents]);
-        alert('Incident reported successfully!');
-        setActiveView('incidents');
-      }
+      setActiveView('report');
     };
 
     const handleRegisterVolunteer = () => {
@@ -66,6 +60,52 @@ export default function TestDashboard() {
     const handleViewIncidents = () => {
       setActiveView('incidents');
     };
+
+  const onFilesSelected = (filesList: FileList | null) => {
+    setReportError(null);
+    if (!filesList || filesList.length === 0) {
+      setReportFiles([]);
+      return;
+    }
+    const files = Array.from(filesList).slice(0, 10);
+    setReportFiles(files);
+  };
+
+  const previewAttachments = useMemo(() => {
+    return reportFiles.map((f) => ({
+      name: f.name,
+      type: f.type,
+      size: f.size,
+      url: URL.createObjectURL(f),
+      isVideo: f.type.startsWith('video/')
+    }));
+  }, [reportFiles]);
+
+  const submitIncident = () => {
+    setReportError(null);
+    if (!reportTitle.trim()) {
+      setReportError('Title is required.');
+      return;
+    }
+    const newIncident = {
+      id: incidents.length + 1,
+      title: reportTitle.trim(),
+      category: reportCategory,
+      severity: reportSeverity,
+      location: reportLocation.trim() || 'Unspecified',
+      timestamp: new Date().toLocaleString(),
+      attachments: previewAttachments
+    };
+    setIncidents([newIncident, ...incidents]);
+    // Reset form
+    setReportTitle('');
+    setReportCategory('Other');
+    setReportSeverity('Medium');
+    setReportLocation('');
+    setReportFiles([]);
+    setActiveView('incidents');
+    alert('Incident reported successfully!');
+  };
 
   return (
     <div style={{ padding: '20px', background: '#f0f0f0', minHeight: '100vh' }}>
@@ -174,6 +214,86 @@ export default function TestDashboard() {
                 </div>
               )}
 
+              {/* Report Incident View */}
+              {activeView === 'report' && (
+                <div>
+                  <h2 style={{ color: '#333', fontSize: '20px', marginBottom: '15px' }}>Report Incident</h2>
+                  {reportError && (
+                    <div style={{ background: '#fee2e2', color: '#991b1b', padding: '10px 12px', borderRadius: '6px', marginBottom: '12px' }}>
+                      {reportError}
+                    </div>
+                  )}
+                  <div style={{ display: 'grid', gap: '12px' }}>
+                    <div>
+                      <label style={{ display: 'block', color: '#374151', marginBottom: '6px' }}>Title *</label>
+                      <input
+                        value={reportTitle}
+                        onChange={(e) => setReportTitle(e.target.value)}
+                        placeholder="e.g. Fire at Elm Street"
+                        style={{ width: '100%', padding: '10px', border: '1px solid #e5e7eb', borderRadius: '6px' }}
+                      />
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '12px' }}>
+                      <div>
+                        <label style={{ display: 'block', color: '#374151', marginBottom: '6px' }}>Category</label>
+                        <select value={reportCategory} onChange={(e) => setReportCategory(e.target.value)} style={{ width: '100%', padding: '10px', border: '1px solid #e5e7eb', borderRadius: '6px' }}>
+                          <option>Fire</option>
+                          <option>Medical</option>
+                          <option>Flood</option>
+                          <option>Crime</option>
+                          <option>Other</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label style={{ display: 'block', color: '#374151', marginBottom: '6px' }}>Severity</label>
+                        <select value={reportSeverity} onChange={(e) => setReportSeverity(e.target.value)} style={{ width: '100%', padding: '10px', border: '1px solid #e5e7eb', borderRadius: '6px' }}>
+                          <option>Low</option>
+                          <option>Medium</option>
+                          <option>High</option>
+                          <option>Critical</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', color: '#374151', marginBottom: '6px' }}>Location</label>
+                      <input
+                        value={reportLocation}
+                        onChange={(e) => setReportLocation(e.target.value)}
+                        placeholder="e.g. Downtown, Building 12"
+                        style={{ width: '100%', padding: '10px', border: '1px solid #e5e7eb', borderRadius: '6px' }}
+                      />
+                    </div>
+                    <div>
+                      <label style={{ display: 'block', color: '#374151', marginBottom: '6px' }}>Attachments (images or videos)</label>
+                      <input
+                        type="file"
+                        accept="image/*,video/*"
+                        multiple
+                        onChange={(e) => onFilesSelected(e.target.files)}
+                      />
+                      {previewAttachments.length > 0 && (
+                        <div style={{ marginTop: '10px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '10px' }}>
+                          {previewAttachments.map((att) => (
+                            <div key={att.url} style={{ border: '1px solid #e5e7eb', borderRadius: '6px', padding: '6px' }}>
+                              <div style={{ fontSize: '12px', color: '#374151', marginBottom: '6px', wordBreak: 'break-all' }}>{att.name}</div>
+                              {att.isVideo ? (
+                                <div style={{ background: '#f3f4f6', color: '#6b7280', fontSize: '12px', padding: '20px', textAlign: 'center', borderRadius: '4px' }}>Video selected</div>
+                              ) : (
+                                <img src={att.url} alt={att.name} style={{ width: '100%', height: '80px', objectFit: 'cover', borderRadius: '4px' }} />
+                              )}
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                    <div style={{ display: 'flex', gap: '10px', marginTop: '8px' }}>
+                      <button onClick={submitIncident} style={{ background: '#3b82f6', color: 'white', padding: '10px 15px', border: 'none', borderRadius: '6px', cursor: 'pointer' }}>Submit Report</button>
+                      <button onClick={() => setActiveView('dashboard')} style={{ background: '#f3f4f6', color: '#111827', padding: '10px 15px', border: '1px solid #e5e7eb', borderRadius: '6px', cursor: 'pointer' }}>Cancel</button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Incidents View */}
               {activeView === 'incidents' && (
                 <div>
@@ -189,6 +309,23 @@ export default function TestDashboard() {
                           <p style={{ color: '#666', fontSize: '14px', margin: '4px 0' }}><strong>Severity:</strong> {incident.severity}</p>
                           <p style={{ color: '#666', fontSize: '14px', margin: '4px 0' }}><strong>Location:</strong> {incident.location}</p>
                           <p style={{ color: '#999', fontSize: '12px', margin: '8px 0 0 0' }}>{incident.timestamp}</p>
+                          {incident.attachments && incident.attachments.length > 0 && (
+                            <div style={{ marginTop: '10px' }}>
+                              <div style={{ color: '#374151', fontSize: '13px', marginBottom: '6px' }}>Attachments</div>
+                              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(120px, 1fr))', gap: '8px' }}>
+                                {incident.attachments.map((att) => (
+                                  <div key={att.url} style={{ border: '1px solid #e5e7eb', borderRadius: '6px', padding: '6px' }}>
+                                    <div style={{ fontSize: '12px', color: '#374151', marginBottom: '6px', wordBreak: 'break-all' }}>{att.name}</div>
+                                    {att.isVideo ? (
+                                      <div style={{ background: '#f3f4f6', color: '#6b7280', fontSize: '12px', padding: '20px', textAlign: 'center', borderRadius: '4px' }}>Video</div>
+                                    ) : (
+                                      <img src={att.url} alt={att.name} style={{ width: '100%', height: '80px', objectFit: 'cover', borderRadius: '4px' }} />
+                                    )}
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
                         </div>
                       ))}
                     </div>
