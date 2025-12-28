@@ -7,8 +7,8 @@ import type { Eip1193Provider } from 'ethers';
 // Contract configuration
 export const CONTRACT_CONFIG = {
   ADDRESS: '0x05228Bba13D6B2BeDF97a7aaA729a962Bd8971BF',
-  CHAIN_ID: 1, // Update based on your deployment network
-  RPC_URL: process.env.VITE_RPC_URL || 'https://eth-rpc.example.com',
+  CHAIN_ID: 11155111, // Sepolia testnet
+  RPC_URL: (import.meta as any).env?.VITE_RPC_URL || 'https://rpc.sepolia.org',
   ABI: [
     // User Profile Functions
     {
@@ -296,17 +296,25 @@ export class ContractService {
   private provider: ethers.BrowserProvider | null = null;
   private signer: ethers.Signer | null = null;
   private contract: ethers.Contract | null = null;
+  private providerInitialized = false;
 
   constructor() {
-    this.initializeProvider();
+    // Don't throw in constructor, defer initialization
   }
 
   async initializeProvider() {
+    if (this.providerInitialized) return;
     if (!window.ethereum) {
-      throw new Error('MetaMask or compatible wallet not installed');
+      console.warn('MetaMask or compatible wallet not installed');
+      return;
     }
-    const ethereum = window.ethereum as unknown as Eip1193Provider;
-    this.provider = new ethers.BrowserProvider(ethereum);
+    try {
+      const ethereum = window.ethereum as unknown as Eip1193Provider;
+      this.provider = new ethers.BrowserProvider(ethereum);
+      this.providerInitialized = true;
+    } catch (error) {
+      console.error('Failed to initialize provider:', error);
+    }
   }
 
   async connectWallet() {
