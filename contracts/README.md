@@ -48,6 +48,7 @@ Main production contract with all core functionality:
 - Volunteer Registration & Assignment
 - Community Announcements
 - Role-Based Access Control
+- **NEW:** Incident Escalation & Multi-Signature Resolution
 - Analytics & Statistics
 
 **Contract Address:** `0x05228Bba13D6B2BeDF97a7aaA729a962Bd8971BF`
@@ -118,6 +119,9 @@ Deployment verification:
 - Track status (Reported → Acknowledged → InProgress → Resolved → Closed)
 - Assign volunteers
 - Get real-time statistics
+- **NEW:** Auto-escalation for critical incidents
+- **NEW:** Time-based escalation for unacknowledged incidents
+- **NEW:** Multi-signature resolution with trust score weighting
 
 ### Volunteer System
 - Register with skills
@@ -125,6 +129,15 @@ Deployment verification:
 - Location-based assignments
 - Rating system
 - Verification process
+
+### Escalation System (NEW)
+- **Auto-Escalation:** Critical incidents escalate automatically
+- **Time-Based:** Unacknowledged incidents escalate after configurable window
+- **Multi-Signature Approval:** Emergency Desk and Community Leaders approve
+- **Trust Score Weighting:** Higher trust = more voting power
+- **Replay Protection:** Nonce-based security
+- **Configurable:** Adjustable time windows and approval weights
+- **Transparent:** Comprehensive event logging
 
 ### Analytics
 - Incident statistics
@@ -266,17 +279,32 @@ Follow TEST_SCENARIOS.md for:
 
 ### Resources
 - **Documentation:** See .md files
-- **Code Examples:** See interactions.js
+- **Code Examples:** See interactions.js & escalation-examples.js
 - **Test Cases:** See TEST_SCENARIOS.md
+- **Escalation Guide:** See ESCALATION_GUIDE.md
+- **Quick Reference:** See ESCALATION_QUICK_REFERENCE.md
 - **GitHub:** https://github.com/cryptonique0/CECD
 
 ### Getting Help
 1. Check TEST_SCENARIOS.md for common issues
 2. Review CONTRACT_INFO.md for function details
-3. Check event logs for errors
-4. Open GitHub issue for bugs
+3. Check ESCALATION_GUIDE.md for escalation features
+4. Check event logs for errors
+5. Open GitHub issue for bugs
 
 ## 📝 Version History
+
+### v2.0.0 - Released December 29, 2025
+- ✅ **Incident escalation system**
+- ✅ **Multi-signature resolution mechanism**
+- ✅ **Trust score-weighted approvals**
+- ✅ **Auto-escalation for critical incidents**
+- ✅ **Time-based escalation triggers**
+- ✅ **Replay protection with nonces**
+- ✅ **Comprehensive event logging**
+- ✅ **19 additional functions (47 total)**
+- ✅ **4 new events (14 total)**
+- ✅ **Complete documentation and examples**
 
 ### v1.0.0 - Released December 25, 2025
 - ✅ Core functionality implemented
@@ -286,11 +314,11 @@ Follow TEST_SCENARIOS.md for:
 - ✅ Announcement system
 - ✅ Analytics dashboard
 
-### Planned v2.0
+### Planned v3.0
 - Upgrade pattern implementation
 - Advanced filtering
 - Token incentives
-- Multi-signature features
+- Cross-chain compatibility
 
 ## 📄 License
 
